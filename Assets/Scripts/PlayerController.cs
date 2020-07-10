@@ -7,17 +7,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject BulletPrefab;
     private Rigidbody2D myRB;
+    private BoxCollider2D collider2D;
     private Animator animator;
     private string actual_tag;
     private float time_enlapsed;
+    [SerializeField]
+    private LayerMask platform_layer;
     private bool is_grounded = true;
+    private float distance_to_ground;
     // Start is called before the first frame update
     void Start()
     {
         myRB = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        collider2D = GetComponent<BoxCollider2D>();
         actual_tag = "Red";
         time_enlapsed = 0.25f;
+        distance_to_ground = collider2D.bounds.extents.y;
     }
 
     // Update is called once per frame
@@ -38,11 +44,9 @@ public class PlayerController : MonoBehaviour
             myRB.velocity = new Vector2(0, myRB.velocity.y);
             animator.Play("Idle");
         }
-
-        if (Input.GetKey(KeyCode.UpArrow) && is_grounded)
+        if (Input.GetKey(KeyCode.UpArrow) && isGrounded())
         {
-            myRB.AddForce(Vector2.up * 500);
-            is_grounded = false;
+            myRB.AddForce(Vector2.up * 100);
         }
 
         if (Input.GetKey(KeyCode.Space))
@@ -76,5 +80,23 @@ public class PlayerController : MonoBehaviour
         {
             actual_tag = "Yellow";
         }
+    }
+
+    bool isGrounded()
+    {
+        float extraHeight = 0.1f;
+        RaycastHit2D raycastHit = Physics2D.Raycast(collider2D.bounds.center, Vector2.down, collider2D.bounds.extents.y + extraHeight, platform_layer);
+        Color rayColor;
+        if (raycastHit.collider != null)
+        {
+            rayColor = Color.green;
+            Debug.Log(raycastHit.collider.name);
+        }
+        else
+        {
+            rayColor = Color.red;
+        }
+        Debug.DrawRay(collider2D.bounds.center, Vector2.down * (collider2D.bounds.extents.y + extraHeight), rayColor, 0.1f);
+        return raycastHit.collider != null;
     }
 }
