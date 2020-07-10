@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Red
+  - Yellow
+  - Brown
+  - Cream
+  - Fly
   layers:
   - Default
   - TransparentFX
@@ -13,9 +18,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Bullet
   - 
   - 
   - 
@@ -40,4 +45,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackGround
+    uniqueID: 3245668501
+    locked: 0
+  - name: Enemies
+    uniqueID: 2892938119
+    locked: 0
+  - name: Player
+    uniqueID: 1693431523
+    locked: 0
+  - name: HUD
+    uniqueID: 3726216737
+    locked: 0
+  - name: GUI
+    uniqueID: 2358551521
     locked: 0
